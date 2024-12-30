@@ -1,5 +1,6 @@
 package com.example.springBoot_taskManagement.entities;
 
+import com.example.springBoot_taskManagement.dto.UserDto;
 import com.example.springBoot_taskManagement.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -85,5 +86,14 @@ public class User implements UserDetails {
     public boolean isEnabled() {
 //        return UserDetails.super.isEnabled();
         return true;
+    }
+
+    public UserDto getUserDto(){
+        UserDto userDto = new UserDto();
+        userDto.setId(id);
+        userDto.setName(name);
+        userDto.setEmail(email);
+        userDto.setUserRole(userRole);
+        return userDto;
     }
 }
