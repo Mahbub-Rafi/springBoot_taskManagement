@@ -16,6 +16,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+    public JwtUtil() {
+    }
+
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
@@ -50,7 +53,7 @@ public class JwtUtil {
     }
 
 
-    private <T>  T extractClaim(String token, Function <Claims, T> claimsResolver) {
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }

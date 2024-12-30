@@ -23,9 +23,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtUtil jwtutil;
+
+    public JwtAuthenticationFilter(@NonNull JwtUtil jwtutil, UserService userService) {
+        this.jwtutil = jwtutil;
+        this.userService = userService;
+    }
 
     private final UserService userService;
 
