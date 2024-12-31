@@ -4,6 +4,7 @@ import com.example.springBoot_taskManagement.dto.UserDto;
 import com.example.springBoot_taskManagement.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,17 +16,21 @@ import java.util.List;
 @Entity
 public class User implements UserDetails {
 
+    @Getter
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Getter
     private String name;
 
+    @Getter
     private String email;
 
     private String password;
 
+    @Getter
     private UserRole userRole;
 
 
@@ -37,6 +42,14 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return "";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
     }
 
     @Override
