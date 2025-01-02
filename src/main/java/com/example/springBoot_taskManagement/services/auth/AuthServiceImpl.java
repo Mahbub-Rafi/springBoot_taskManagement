@@ -6,14 +6,12 @@ import com.example.springBoot_taskManagement.entities.User;
 import com.example.springBoot_taskManagement.enums.UserRole;
 import com.example.springBoot_taskManagement.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-//@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
@@ -53,4 +51,25 @@ public class AuthServiceImpl implements AuthService {
     public boolean hasUserWithEmail(String email) {
         return userRepository.findFirstByEmail(email).isPresent();
     }
+
+    @Override
+    public User loadUserByEmail(String email) {
+        return userRepository.findFirstByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+    }
+
+    @Override
+    public Long getUserIdByEmail(String email) {
+        return userRepository.findFirstByEmail(email)
+                .map(User::getId) // Retrieve the ID of the user
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+    }
+
+    @Override
+    public UserRole getUserRoleByEmail(String email) {
+        return userRepository.findFirstByEmail(email)
+                .map(User::getUserRole) // Retrieve the role of the user
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+    }
 }
+

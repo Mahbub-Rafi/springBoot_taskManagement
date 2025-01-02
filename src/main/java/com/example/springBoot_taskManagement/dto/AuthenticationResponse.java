@@ -8,7 +8,7 @@ public class AuthenticationResponse {
 
     private String jwt;
 
-    private int userId;
+    private Long userId;
 
     private UserRole userRole;
 
@@ -17,7 +17,7 @@ public class AuthenticationResponse {
         this.jwt = jwt;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

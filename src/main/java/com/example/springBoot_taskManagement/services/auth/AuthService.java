@@ -2,6 +2,8 @@ package com.example.springBoot_taskManagement.services.auth;
 
 import com.example.springBoot_taskManagement.dto.SignupRequest;
 import com.example.springBoot_taskManagement.dto.UserDto;
+import com.example.springBoot_taskManagement.enums.UserRole;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthService {
 
@@ -9,4 +11,9 @@ public interface AuthService {
 
     boolean hasUserWithEmail(String email);
 
+    UserDetails loadUserByEmail(String email);
+
+    Long getUserIdByEmail(String email);
+
+    UserRole getUserRoleByEmail(String email);
 }
