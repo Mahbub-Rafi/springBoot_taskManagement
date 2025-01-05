@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -31,7 +30,7 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping(value = "/signup", produces = "application/json")
+    @PostMapping(value = "/signup", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> signupUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (authService.hasUserWithEmail(signupRequest.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists with this email");
