@@ -31,14 +31,13 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup", produces = "application/json")
     public ResponseEntity<?> signupUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (authService.hasUserWithEmail(signupRequest.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists with this email");
         }
 
         UserDto createdUserDto = authService.signUpUser(signupRequest);
-
         if (createdUserDto == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User could not be created");
         }
@@ -46,14 +45,14 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDto);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
+    @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getEmail(),
                     authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
 
         String jwtToken = jwtUtil.generateToken(authService.loadUserByEmail(authenticationRequest.getEmail()));

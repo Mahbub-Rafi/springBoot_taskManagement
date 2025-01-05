@@ -61,15 +61,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Long getUserIdByEmail(String email) {
         return userRepository.findFirstByEmail(email)
-                .map(User::getId) // Retrieve the ID of the user
+                .map(User::getId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
     }
 
     @Override
     public UserRole getUserRoleByEmail(String email) {
         return userRepository.findFirstByEmail(email)
-                .map(User::getUserRole) // Retrieve the role of the user
+                .map(User::getUserRole)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
     }
 }
-
